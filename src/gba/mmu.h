@@ -318,6 +318,7 @@ class AGB_MMU
 		u32 irq_delay;
 		u32 last_delay;
 		u32 cycles;
+		u32 cycle_limit;
 		bool irq_update;
 
 		//Nintendo MP3 data
@@ -343,7 +344,8 @@ class AGB_MMU
 		bool start_irqs;
 		bool is_video_playing;
 		bool is_music_playing;
-		bool pause_media;
+		bool is_media_playing;
+		bool is_end_of_samples;
 
 		u8 cnt_data[12];
 		u32 cmd;
@@ -367,7 +369,7 @@ class AGB_MMU
 		std::vector<u32> video_frames;
 		u16 thumbnail_addr;
 		u16 thumbnail_index;
-		u32 video_data_addr; 
+		u32 video_data_addr;
 
 		u32 music_length;
 		u32 video_progress;
@@ -382,6 +384,9 @@ class AGB_MMU
 		bool update_audio_stream;
 		bool update_trackbar_timestamp;
 
+		bool audio_irq_active;
+		bool video_irq_active;
+
 		std::vector<u8> sfx_data;
 
 		u32 tracker_progress;
@@ -395,6 +400,7 @@ class AGB_MMU
 
 		u8 volume;
 		u8 bass_boost;
+		u32 video_brightness;
 		bool use_bass_boost;
 		bool use_headphones;
 
@@ -667,6 +673,8 @@ class AGB_MMU
 	void play_yan_set_folder();
 	void play_yan_get_id3_data(std::string filename);
 	void play_yan_set_ini_file();
+	void play_yan_set_sound_samples();
+	void play_yan_set_video_pixels();
 	void play_yan_wake();
 	bool play_yan_load_audio(std::string filename);
 	bool play_yan_load_video(std::string filename);
@@ -674,6 +682,7 @@ class AGB_MMU
 	void play_yan_grab_frame_data(u32 frame);
 	void play_yan_check_video_header(std::string filename);
 	void play_yan_check_audio_from_video(std::vector <u8> &data);
+	bool play_yan_get_headphone_status();
 
 	void write_nmp(u32 address, u8 value);
 	u8 read_nmp(u32 address);
